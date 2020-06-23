@@ -13,8 +13,14 @@ local function update_lines(buffer, fromline, toline)
 	vim.api.nvim_buf_clear_namespace(buffer, ns, fromline, toline)
 
 	local listchars = vim.api.nvim_get_option('listchars')
-	local space = listchars:match('space:([^,]+)') or '·'
-	local tab = listchars:match('tab:([^,]+)') or ' │'
+	local space = '·'
+	for _space in listchars:gmatch('space:([^,]+)') do
+		space = _space
+	end
+	local tab = ' │'
+	for _tab in listchars:gmatch('tab:([^,]+)') do
+		tab = _tab
+	end
 	local tabta, tabab = tab:match("^([\x01-\x7f\xc2-\xf4][\x80-\xbf]*)(.*)$")
 
 	local expandtab = vim.api.nvim_buf_get_option(buffer, 'expandtab')
