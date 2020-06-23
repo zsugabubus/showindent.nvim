@@ -12,5 +12,5 @@ command! -nargs=? ShowIndentToggleOnBuffer lua
 augroup showindent
 	autocmd!
 	autocmd BufWinEnter * ShowIndentAttachToBuffer
-	autocmd OptionSet expandtab,tabstop,listchars ShowIndentReattach
+	autocmd OptionSet expandtab,tabstop,shiftwidth,listchars ShowIndentReattach
 augroup END

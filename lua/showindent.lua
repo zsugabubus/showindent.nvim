@@ -25,6 +25,10 @@ local function update_lines(buffer, fromline, toline)
 
 	local expandtab = vim.api.nvim_buf_get_option(buffer, 'expandtab')
 	local tabstop = vim.api.nvim_buf_get_option(buffer, 'tabstop')
+	local shiftwidth = vim.api.nvim_buf_get_option(buffer, 'shiftwidth')
+	if shiftwidth == 0 then
+		shiftwidth = tabstop
+	end
 	local indentexpr = vim.api.nvim_buf_get_option(buffer, 'indentexpr')
 	local eval = false
 	local lnumoff = 0
@@ -70,7 +74,7 @@ local function update_lines(buffer, fromline, toline)
 
 		-- FIXME: Read values from 'listchars'.
 		if not expandtab then
-			indentstr = (((tabab):rep(tabstop - 1)..tabta):rep(indent / tabstop))
+			indentstr = (((tabstop == shiftwidth and tabab or space):rep(shiftwidth - 1)..tabta):rep(indent / shiftwidth))
 		else
 			indentstr = space:rep(indent - 1)
 		end
